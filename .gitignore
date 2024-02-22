@@ -1,0 +1,5 @@
+.idea
+bitrix
+.htaccess
+upload
+!/local/templates/.default/components/bitrix/
