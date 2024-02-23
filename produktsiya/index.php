@@ -1,10 +1,25 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+
+// не уверен по этому моменту - нагуглил
+$strCode = trim($_REQUEST['IBLOCK_CODE']) ;
+
+if ($strCode)
+{
+    $res = CIBlock::GetList(
+        Array(),
+        Array(
+            'ACTIVE'=>'Y',
+            "=CODE"=>$strCode
+        ),true
+    );
+}
+
 $APPLICATION->SetTitle("Продукция");
 ?><?$APPLICATION->IncludeComponent(
-	"bitrix:news.list", 
-	"my-tem", 
-	array(
+	"bitrix:news.list",
+	"my-tem",
+	Array(
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"ADD_SECTIONS_CHAIN" => "N",
 		"AJAX_MODE" => "N",
@@ -24,13 +39,10 @@ $APPLICATION->SetTitle("Продукция");
 		"DISPLAY_PICTURE" => "Y",
 		"DISPLAY_PREVIEW_TEXT" => "Y",
 		"DISPLAY_TOP_PAGER" => "N",
-		"FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
+		"FIELD_CODE" => array("",""),
 		"FILTER_NAME" => "",
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
-		"IBLOCK_ID" => "1",
+		"IBLOCK_ID" => $res,
 		"IBLOCK_TYPE" => "products",
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
 		"INCLUDE_SUBSECTIONS" => "N",
@@ -46,11 +58,7 @@ $APPLICATION->SetTitle("Продукция");
 		"PARENT_SECTION" => "",
 		"PARENT_SECTION_CODE" => "",
 		"PREVIEW_TRUNCATE_LEN" => "",
-		"PROPERTY_CODE" => array(
-			0 => "WEIGHT",
-			1 => "UNIT",
-			2 => "",
-		),
+		"PROPERTY_CODE" => array("WEIGHT","UNIT",""),
 		"SET_BROWSER_TITLE" => "Y",
 		"SET_LAST_MODIFIED" => "N",
 		"SET_META_DESCRIPTION" => "Y",
@@ -62,8 +70,6 @@ $APPLICATION->SetTitle("Продукция");
 		"SORT_BY2" => "SORT",
 		"SORT_ORDER1" => "DESC",
 		"SORT_ORDER2" => "ASC",
-		"STRICT_SECTION_CHECK" => "N",
-		"COMPONENT_TEMPLATE" => "my-tem"
-	),
-	false
+		"STRICT_SECTION_CHECK" => "N"
+	)
 );?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
